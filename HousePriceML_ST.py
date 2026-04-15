@@ -3,28 +3,31 @@ import pandas as pd
 import joblib
 
 model = joblib.load("house_price_model.pkl")
+columns = joblib.load("model_columns.pkl")
 
 st.title("House Price Predictor")
 
-# Inputs
-bedrooms = st.number_input("Bedrooms", 1, 10)
-bathrooms = st.number_input("Bathrooms", 1.0, 10.0)
-sqft = st.number_input("Square Feet", 300, 10000)
-lot_size = st.number_input("Lot Size (acre)", 0.01, 10.0)
-year_built = st.number_input("Year Built", 1900, 2025)
-zip_code = st.number_input("Zip Code", 10000, 99999)
+st.write("Enter property details:")
 
-# Convert to dataframe
-input_data = pd.DataFrame([{
-    "bedrooms": bedrooms,
-    "bathrooms": bathrooms,
-    "sqft": sqft,
-    "lot_size": lot_size,
-    "year_built": year_built,
-    "zip": zip_code
-}])
+user_input = {}
+
+# Dynamically create inputs based on training columns
+for col in columns:
+    if "bed" in col.lower():
+        user_input[col] = st.number_input(col, 0, 10, 3)
+    elif "bath" in col.lower():
+        user_input[col] = st.number_input(col, 0.0, 10.0, 2.0)
+    elif "zip" in col.lower():
+        user_input[col] = st.number_input(col, 10000, 99999, 10001)
+    elif "type" in col.lower() or "style" in col.lower():
+        user_input[col] = st.selectbox(col, ["house", "condo", "apartment"])
+    else:
+        user_input[col] = st.number_input(col, 0.0, 100000.0, 1000.0)
+
+# Convert to DataFrame
+input_df = pd.DataFrame([user_input])
 
 # Predict
 if st.button("Predict Price"):
-    prediction = model.predict(input_data)[0]
+    prediction = model.predict(input_df)[0]
     st.success(f"Estimated Price: ${prediction:,.0f}")
