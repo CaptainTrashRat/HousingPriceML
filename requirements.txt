@@ -3,6 +3,5 @@ pandas
 joblib
 scikit-learn
 xgboost
-python
 datasets
 dill
