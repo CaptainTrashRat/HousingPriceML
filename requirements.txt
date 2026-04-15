@@ -1,7 +1,8 @@
 streamlit
-pandas==3.0.0
-joblib==1.5.3
-scikit-learn==1.8.0
+pandas
+joblib
+scikit-learn
 xgboost
-python==3.11.9
+python
+datasets
 dill
