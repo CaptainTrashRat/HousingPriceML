@@ -1,7 +1,4 @@
-streamlit
-pandas
 joblib
 scikit-learn
-xgboost
-datasets
-dill
+pandas
+numpy
