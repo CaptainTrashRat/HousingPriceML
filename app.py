@@ -69,7 +69,7 @@ if st.button("Predict Price", type="primary"):
     st.caption(f"Model accuracy: MAE ≈ $126,500 | R² = 0.716 | MAPE ≈ 21%")
 
     if not zip_provided:
-        st.warning("⚠️ No zip code provided — prediction uses average location pricing. "
+        st.warning("No zip code provided — prediction uses average location pricing. "
                    "Adding a zip code may improve accuracy.")
 
     # Confidence range based on MAPE
